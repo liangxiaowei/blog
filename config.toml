@@ -1,7 +1,7 @@
 ##########################################
 # Site Settings
 
-baseURL = "https://example.com/"
+baseURL = "https://liangxiaowei.github.io"
 title = "pdway"
 languageCode = "zh-CN"
 hasCJKLanguage = true
