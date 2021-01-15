@@ -1,5 +1,5 @@
 ---
-title: "从零开始使用 archlinux — dwm + st + chrome"
+title: "从零开始使用 archlinux — dwm + st 打开 chrome 愉快上网"
 date: 2021-01-14
 draft: false
 ---
@@ -15,6 +15,11 @@ timedatectl set-ntp true
 hwclock --systohc 
 ```
 上面文章其实有提到单系统可以这么操作，双系统我不知道直接这么操作有什么影响，所以谨慎模仿。
+#### 文本编辑器
+我用的是 nano，操作比较简单。没下载的可以下载一下，下面修改文件需要用到文本编辑器。
+```
+sudo pacman -S nano
+```
 #### 配置下载源
 在安装过程中，已经在 /etc/pacman.d/mirrorlist 这个文件下，把国内的镜像源地址放到最前面。不知道为啥，和网上的教程都不一样，我这个文件一开始是没有将镜像源地址按照国家划分，也没有国内的镜像源地址，国内的镜像源地址我是自己手打上去的。我还改了 /etc/pacman.conf 这个文件，在里面添加 Arch Linux 中文社区仓库的地址，原因和修改内容上面那篇文章有提到。加完后，需要安装密匙
 ```
@@ -67,9 +72,16 @@ sudo pacman -S wpa_supplicant
    git clone https://git.suckless.org/st --depth=1
    ```
 2. 根据上面说的 [st 视频](https://www.bilibili.com/video/BV1t4411K74H?t=343)修改 config.mk 文件
+   ```
+   #X11INC = /usr/X11R6/include
+   #X11LIB = /usr/X11R6/lib
+   # 以上两行改成下面两行
+   X11INC = /usr/include/X11
+   X11LIB = /usr/include/X11
+   ```
 3. 编译并且安装 st
    ```
-   make clean install
+   sudo make clean install
    ```
 安装完 st，再进入 dwm，然后 alt + shift + enter 打开终端 st。这时候你就可以在 dwm 里面玩耍了。
 #### 浏览器 chrome
@@ -81,3 +93,12 @@ sudo pacman -S google-chrome
 ```
 google-chrome-stable
 ```
+
+#### 修改 st 的字体和字体大小
+一开始 st 的字体会有点小，在我的电脑上还出现字母之间遮挡的问题，可以通过修改 st 目录下面的 config.h 文件来修改字体。文件打开如下图所示，找到划线的那一行代码
+![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/434d75a05387478f8be386733cfabeee~tplv-k3u1fbpfcp-watermark.image)
+我将上面划线的部分改成了
+```
+Source Code Pro:pixelsize=24
+```
+Source Code Pro 是一种字体，pixelsize=24 改变字体的大小。改完这个文件保存退出，重新执行 `sudo make clean install` 编译并且安装 st，然后退出 dwm，重新启动 dwm 就行了。
